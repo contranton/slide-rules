@@ -1,0 +1,421 @@
+<meta charset="UTF-8"/>
+<!--
+///////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (C) 2020 Dr Robert P. Wolf                      //
+//                                                                               //
+// Permission is hereby granted, free of charge, to any person obtaining a copy  //
+// of this software and associated documentation files (the "Software"), to deal //
+// in the Software without restriction, including without limitation the rights  //
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell     //
+// copies of the Software, and to permit persons to whom the Software is         //
+// furnished to do so, subject to the following conditions:                      //
+//                                                                               //
+// The above copyright notice and this permission notice shall be included in    //
+// all copies or substantial portions of the Software.                           //
+//                                                                               //
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR    //
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,      //
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE   //
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER        //
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, //
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN     //
+// THE SOFTWARE.                                                                 //
+///////////////////////////////////////////////////////////////////////////////////
+
+-->
+<html>
+  <head>
+    <title>Pickett N909-ES</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
+  </head>
+<body style="background-size: 100%;" onkeydown = "javascript: ProcessKey (event);">
+
+<div align="right">
+	<font color="black">
+	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings
+    <input type = radio name = other_side id=visible_front onclick="javascript: changeSide ('front');" checked=true/>Front
+    <input type = radio name = other_side id=visible_back onclick="javascript: changeSide ('back');"/>Back
+    <input type = radio name = other_side id=visible_both onclick="javascript: changeSide ('both');"/>Both sides
+  </font>
+</div>
+
+<div style="position: absolute; z-index: -1; top: 320px; font-family: arial;">
+	Use the following symbols, when entering the values on the Conversion Scale:
+	<table><tr>
+	<td valign="top"><ul>
+		<li><b>stm</b> = Short to Metric Tons</li>
+		<li><b>mts</b> = Matric to Short Tons</li>
+		<li><b>mk</b> = Miles to Kilometres</li>
+		<li><b>km</b> = Kilometres to Miles</li>
+		<li><b>smk</b> = Square Miles to Square Kilometres</li>
+		<li><b>skm</b> = Square Kilometres to Square Miles</li>
+		<li><b>mf</b> = Metres to Feet</li>
+		<li><b>fm</b> = Feet to Metres</li>
+		<li><b>smf</b> = Square Metres to Square Feet &#x00d7; 10</li>
+		<li><b>sfm</b> = Square Feet &#x00d7; 10 to Square Metres</li>
+		<li><b>cmf</b> = Cubic Metres to Cubic Feed &#x00d7; 10</li>
+		<li><b>cfm</b> = Cubic Feed &#x00d7; 10 to Cubic Metres</li>
+	</ul></td>
+	<td valign="top"><ul>
+		<li><b>gl</b> = Gallons to Litres</li>
+		<li><b>lg</b> = Litres to Gallons</li>
+		<li><b>lq</b> = Litres to Quarts</li>
+		<li><b>ql</b> = Quarts to Litres</li>
+		<li><b>kp</b> = Kilograms to Pounds</li>
+		<li><b>pk</b> = Pounds to Kilograms</li>
+		<li><b>og</b> = Ounces to Grams &#x00d7; 10</li>
+		<li><b>go</b> = Grams &#x00d7; 10 to Ounces</li>
+	</ul></td>
+	<td valign="top"><ul>
+		<li><b>my</b> = Metres to Yards</li>
+		<li><b>ym</b> = Yards to Metres</li>
+		<li><b>smy</b> = Square Metres to Square Yards</li>
+		<li><b>sym</b> = Square Yards to Square Metres</li>
+		<li><b>cmy</b> = Cubic Metres to Cubic Yards</li>
+		<li><b>cym</b> = Cubic Yards to Cubic Metres</li>
+	</ul></td>
+	<td valign="top"><ul>
+		<li><b>ic</b> = Inches to Centimetres</li>
+		<li><b>ci</b> = Centimetres to Inches</li>
+		<li><b>sic</b> = Square Inches to Square Centimetres</li>
+		<li><b>sci</b> = Square Centimetres to Square Inches</li>
+		<li><b>cic</b> = Cubic Inches to Cubic Centimetres</li>
+		<li><b>cci</b> = Cubic Centimetres to Cubic Inches</li>
+	</ul></ld>
+	</tr></table>
+</div>
+
+<div id="root"></div>
+
+<script src="../../../js/sliderule_construction_kit.js"></script>
+<script src="../../../js/scales.js"></script>
+<script src="../../../js/folded_scales.js"></script>
+<script src="../../../js/sliderule_ctrl.js"></script>
+
+<script>
+
+var corrugated = new Image (); corrugated . src = 'corrugated12.png'; corrugated . onload = function () {sliderules . requireRedraw = true;};
+
+var sliderules = new Sliderules ();
+
+var s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Screw (0.016, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.004, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Screw (1.184, 24, 16, Math . random () * Math . PI, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.172, 183, 12, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 183, 12, '#eeeeee', '#666666'));
+s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
+s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+
+var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', -0.013, 24));
+r . markings . push (new Engraving ('A', '14px arial', 'center', 'black', -0.013, 48));
+r . markings . push (new Engraving ('K', '14px arial', 'center', 'black', 1.013, 24));
+r . markings . push (new Engraving ('A', '14px arial', 'center', 'black', 1.013, 48));
+r . scales . push (new spacer (2));
+r . scales . push (new scale_K (24, {draw_pi: false, draw_e: false}));
+r . scales . push (new scale_A (24, {draw_e: false}));
+
+r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+r . markings . push (new Engraving ('B', '14px arial', 'center', 'black', -0.013, 20));
+r . markings . push (new Engraving ('T', '14px arial', 'center', 'black', -0.013, 38));
+r . markings . push (new Engraving ('S', '14px arial', 'center', 'black', -0.013, 56));
+r . markings . push (new Engraving ('CI', '14px arial', 'center', 'black', -0.013, 78));
+r . markings . push (new Engraving ('C', '14px arial', 'center', 'black', -0.013, 98));
+r . markings . push (new Engraving ('B', '14px arial', 'center', 'black', 1.013, 20));
+r . markings . push (new Engraving ('T', '14px arial', 'center', 'black', 1.013, 38));
+r . markings . push (new Engraving ('S', '14px arial', 'center', 'black', 1.013, 56));
+r . markings . push (new Engraving ('CI', '14px arial', 'center', 'black', 1.013, 78));
+r . markings . push (new Engraving ('C', '14px arial', 'center', 'black', 1.013, 98));
+r . markings . push (new Engraving ('Model', '11px arial', 'right', 'black', -0.06, 20));
+r . markings . push (new Engraving ('N909-ES', 'bold 11px arial', 'right', 'black', -0.02, 20));
+r . markings . push (new Engraving ('SIMPLEX TRIG RULE', '11px arial', 'right', 'black', -0.02, 34));
+r . markings . push (new Engraving ('with', '11px arial', 'right', 'black', -0.07, 102 - 12 - 14));
+r . markings . push (new Engraving ('METRIC', 'italic 12px arial', 'right', 'black', -0.025, 102 - 12 - 14));
+r . markings . push (new Engraving ('CONVERSION', '11px arial', 'right', 'black', -0.025, 102 - 12));
+r . markings . push (new Bolt (-0.085, 51, 6, 'black', 'black'));
+r . markings . push (new Bolt (1.085, 51, 6, 'black', 'black'));
+r . markings . push (new Engraving ('PICKETT', 'bold 14px arial', 'center', 'black', 1.05, 24));
+r . markings . push (new Engraving ('MADE IN U.S.A.', '10px arial', 'center', 'black', 1.055, 84));
+r . scales . push (new scale_B (24, {draw_e: false}));
+r . scales . push (new scale_CTTdec (18, {lines: [{left: 0, right: 1, height: 1}]}));
+r . scales . push (new scale_CSdec_down (18));
+r . scales . push (new scale_CI (24, {marking_colour: 'red'}));
+r . scales . push (new scale_C (24, {draw_r: true, draw_e: false, draw_c: false}));
+
+r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('D', '14px arial', 'center', 'black', -0.013, 20));
+r . markings . push (new Engraving ('L', '14px arial', 'center', 'black', -0.013, 40));
+r . markings . push (new Engraving ('D', '14px arial', 'center', 'black', 1.013, 20));
+r . markings . push (new Engraving ('L', '14px arial', 'center', 'black', 1.013, 40));
+r . scales . push (new scale_D (24, {draw_r: true, draw_e: false, draw_c: false}));
+r . scales . push (new scale_M (24));
+r . scales . push (new spacer (2));
+
+////////////////
+// OTHER SIDE //
+////////////////
+
+var dbr = function (ctx, length, from, to, b1, b2, texts) {
+	from *= length; to *= length;
+	ctx . beginPath (); ctx . moveTo (from, b1); ctx . lineTo (from, b2);
+	for (ind in texts) {
+		var text = texts [ind];
+		var span = ctx . measureText (text . text) . width * 0.5 + 2;
+		var tt = length * text . location;
+		if (tt > from && tt < to) {ctx . lineTo (tt - span, b2); from = tt + span; ctx . moveTo (from, b2);}
+		ctx . fillText (text . text, length * text . location, b2);
+	}
+	ctx . lineTo (to, b2); ctx . lineTo (to, b1); ctx . stroke ();
+};
+var ldbr = function (ctx, length, from, to, b1, b2, text) {
+	from *= length; to *= length;
+	ctx . beginPath (); ctx . moveTo (from, b1); ctx . lineTo (from, b2);
+	var span = ctx . measureText (text);
+	ctx . lineTo (to - ctx . measureText (text) . width * 0.5 - 2, b2); ctx . stroke ();
+	ctx . fillText (text, to, b2);
+};
+var rdbr = function (ctx, length, from, to, b1, b2, text) {
+	from *= length; to *= length;
+	ctx . beginPath (); ctx . moveTo (from, b1); ctx . lineTo (from, b2);
+	var span = ctx . measureText (text);
+	ctx . lineTo (to + ctx . measureText (text) . width * 0.5 + 2, b2); ctx . stroke ();
+	ctx . fillText (text, to, b2);
+};
+var cl = function (value) {return Math . log10 (value) * 0.5;};
+var custom_scale = function (height) {
+	spacer . call (this, height, null);
+}; inherit (custom_scale, spacer);
+custom_scale . prototype . value = function (location) {return Math . pow (10, location * 2);};
+custom_scale . prototype . location = cl;
+custom_scale . prototype . locations = {
+	litres_to_gallons: cl (26.4172),
+	feet_to_metres: cl (30.48 * 0.935), metres_to_feet: cl (93.5),
+	yards_to_metres: cl (91.44 * 0.164), metres_to_yards: cl (16.4),
+	pounds_to_kilograms: cl (10.6), kilograms_to_pounds: cl (10.6 / 0.453592),
+	kilometres_to_miles: cl (0.621371 * 2.35), miles_to_kilometres: cl (2.35),
+	metric_to_short_tons: cl (1 / 0.907185),
+	square_feet_to_metres: cl (4.55), square_metres_to_feet: cl (4.55 / 0.92903),
+	cubic_feet_to_metres: cl (2.65), cubic_metres_to_feet: cl (2.65/ 0.283168),
+	quarts_to_litres: cl (1.2835), litres_to_quarts: cl (1.2835 / 0.946353),
+	cubic_centimetres_to_inches: cl (2.31), cubic_inches_to_centimetres: cl (2.31 * 1.63871),
+	grams_to_ounces: cl (1.79), ounces_to_grams: cl (1.79 * 2.83495),
+	square_yards_to_metres: cl (9.7 * 0.836127), square_metres_to_yards: cl (9.7),
+	centimetres_to_inches: cl (5.55), inches_to_centimetres: cl (5.55 * 2.54),
+	square_kilometres_to_miles: cl (16.7), square_miles_to_kilometres: cl (16.7 / 0.386102),
+	cubic_yards_to_metres: cl (57.5), cubic_metres_to_yards: cl (57.5 / 0.764555),
+	square_centimetres_to_inches: cl (100 / 6.4516), square_inches_to_centimetres: 1
+};
+custom_scale . prototype . draw = function (ctx, length) {
+	var b1 = this . height * 0.2, b2 = this . height * 0.4, b3 = this . height * 0.6, b4 = this . height * 0.8, b5 = this . height;
+	ctx . font = 'bold 14px arial';
+	ctx . textBaseline = 'middle';
+	dbr (ctx, length, this . locations . litres_to_gallons, 1, 0, b2, [{text: 'GALLONS', location: 0.77}, {text: 'LITRES', location: 0.95}]);
+	dbr (ctx, length, this . locations . feet_to_metres, this . locations . metres_to_feet, 0, b1, [{text: 'METRES', location: 0.8}, {text: 'FEET', location: 0.9}, {text: 'TONS', location: 0.04}]);
+	dbr (ctx, length, this . locations . yards_to_metres, this . locations . metres_to_yards, 0, b1, [{text: 'METRES', location: 0.56}, {text: 'YARDS', location: 0.63}]);
+	dbr (ctx, length, this . locations . pounds_to_kilograms, this . locations . kilograms_to_pounds, 0, b2, [{text: 'KILOGRAMS', location: 0.555}, {text: 'POUNDS', location: 0.65}]);
+	ldbr (ctx, length, this . locations . kilometres_to_miles, 0.13, 0, b1, 'MILES');
+	rdbr (ctx, length, this . locations . miles_to_kilometres, 0.13, 0, b2, 'KILOMETRES');
+	ldbr (ctx, length, this . locations . metric_to_short_tons, 0.05, 0, b2, 'SHORT');
+	ldbr (ctx, length, 0, 0.05, 0, b3, 'METRIC');
+	dbr (ctx, length, this . locations . square_feet_to_metres, this . locations . square_metres_to_feet, 0, b1, [{text: 'SQ. METERS', location: 0.29}, {text: 'SQ. FEET X I0', location: 0.388}]);
+	dbr (ctx, length, this . locations . cubic_feet_to_metres, this . locations . cubic_metres_to_feet, 0, b2, [{text: 'CU. METERS', location: 0.27}, {text: 'CU. FEET X I0', location: 0.41}]);
+	dbr (ctx, length, this . locations . quarts_to_litres, this . locations . litres_to_quarts, b5, b4, [{text: 'LITERS', location: 0.028}, {text: 'QUARTS', location: 0.095}]);
+	dbr (ctx, length, this . locations . cubic_centimetres_to_inches, this . locations . cubic_inches_to_centimetres, b5, b4, [{text: 'INCHES', location: 0.156}, {text: 'CUBIC', location: 0.236}, {text: 'CM. X I0', location: 0.315}]);
+	dbr (ctx, length, this . locations . grams_to_ounces, this . locations . ounces_to_grams, b5, b3, [{text: 'OUNCES', location: 0.19}, {text: 'GRAMS X I0', location: 0.276}]);
+	dbr (ctx, length, this . locations . square_yards_to_metres, this . locations . square_metres_to_yards, b5, b4, [{text: 'METERS', location: 0.426}, {text: 'SQ.', location: 0.475}, {text: 'YARDS', location: 0.516}]);
+	dbr (ctx, length, this . locations . centimetres_to_inches, this . locations . inches_to_centimetres, b5, b3, [{text: 'INCHES', location: 0.41}, {text: 'CENTIMETERS', location: 0.52}]);
+	dbr (ctx, length, this . locations . square_kilometres_to_miles, this . locations . square_miles_to_kilometres, b5, b4, [{text: 'SQ. MILES', location: 0.652}, {text: 'SQ. KILOMETERS', location: 0.752}]);
+	dbr (ctx, length, this . locations . cubic_yards_to_metres, this . locations . cubic_metres_to_yards, b5, b4, [{text: 'METERS', location: 0.852}, {text: 'CU.', location: 0.91}, {text: 'YARDS', location: 0.958}]);
+	dbr (ctx, length, this . locations . square_centimetres_to_inches, this . locations . square_inches_to_centimetres, b5, b3, [{text: 'SQ. INCHES', location: 0.68}, {text: 'SQ. CENTIMETERS', location: 0.9}]);
+};
+custom_scale . prototype . read = function (position, shift) {
+	position = position . toLowerCase ();
+	switch (position) {
+	case 'my': return this . value (this . locations . metres_to_yards);
+	case 'smy': return this . value (this . locations . square_metres_to_yards);
+	case 'cmy': return this . value (this . locations . cubic_metres_to_yards);
+	case 'ym': return this . value (this . locations . yards_to_metres);
+	case 'sym': return this . value (this . locations . square_yards_to_metres);
+	case 'cym': return this . value (this . locations . cubic_yards_to_metres);
+	case 'mf': return this . value (this . locations . metres_to_feet);
+	case 'smf': return this . value (this . locations . square_metres_to_feet);
+	case 'cmf': return this . value (this . locations . cubic_metres_to_feet);
+	case 'fm': return this . value (this . locations . feet_to_metres);
+	case 'sfm': return this . value (this . locations . square_feet_to_metres);
+	case 'cfm': return this . value (this . locations . cubic_feet_to_metres);
+	case 'ic': return this . value (this . locations . inches_to_centimetres);
+	case 'sic': return this . value (this . locations . square_inches_to_centimetres);
+	case 'cic': return this . value (this . locations . cubic_inches_to_centimetres);
+	case 'ci': return this . value (this . locations . centimetres_to_inches);
+	case 'sci': return this . value (this . locations . square_centimetres_to_inches);
+	case 'cci': return this . value (this . locations . cubic_centimetres_to_inches);
+	case 'mts': case 'mst': return this . value (this . locations . metric_to_short_tons);
+	case 'stm': case 'smt': return 1;
+	case 'km': return this . value (this . locations . kilometres_to_miles);
+	case 'mk': return this . value (this . locations . miles_to_kilometres);
+	case 'skm': return this . value (this . locations . square_kilometres_to_miles);
+	case 'smk': return this . value (this . locations . square_miles_to_kilometres);
+	case 'lg': return this . value (this . locations . litres_to_gallons);
+	case 'gl': return 100;
+	case 'lq': return this . value (this . locations . litres_to_quarts);
+	case 'ql': return this . value (this . locations . quarts_to_litres);
+	case 'og': return this . value (this . locations . ounces_to_grams);
+	case 'go': return this . value (this . locations . grams_to_ounces);
+	case 'kp': return this . value (this . locations . kilograms_to_pounds);
+	case 'pk': return this . value (this . locations . pounds_to_kilograms);
+	default: break;
+	}
+	return null;
+};
+
+var fahrenheit_scale = function (height) {
+	spacer . call (this, height, null);
+}; inherit (fahrenheit_scale, spacer);
+fahrenheit_scale . prototype . value64 = function (location) {return 64 * (location - 0.84) / 0.16;};
+fahrenheit_scale . prototype . location64 = function (value) {return 0.84 + 0.16 * value / 64;};
+fahrenheit_scale . prototype . valueF = function (location) {return 220 * location / 0.76 - 10;};
+fahrenheit_scale . prototype . locationF = function (value) {return 0.76 * (value + 10) / 220;};
+fahrenheit_scale . prototype . value = function (location) {if (location >= 0.84) return this . value64 (location); return this . valueF (location);};
+fahrenheit_scale . prototype . location = function (value, position) {if (position >= 0.84) return this . location64 (value); return this . locationF (value);};
+fahrenheit_scale . prototype . draw = function (ctx, length) {
+	var h1 = this . height * 0.5, h2 = this . height * 0.4, h3 = this . height * 0.2;
+	ctx . translate (0, this . height);
+	for (var ind = -10; ind < 210; ind += 10) {
+		mark (ctx, ind, length * this . locationF (ind), h1);
+		tick (ctx, length * this . locationF (ind + 2), h3);
+		tick (ctx, length * this . locationF (ind + 4), h3);
+		tick (ctx, length * this . locationF (ind + 6), h3);
+		tick (ctx, length * this . locationF (ind + 8), h3);
+	}
+	mark (ctx, 210, length * this . locationF (210), h1);
+	for (var ind = 0; ind < 64; ind += 8) {
+		mark (ctx, ind, length * this . location64 (ind), h1);
+		tick (ctx, length * this . location64 (ind + 2), h2);
+		tick (ctx, length * this . location64 (ind + 4), h2);
+		tick (ctx, length * this . location64 (ind + 6), h2);
+		tick (ctx, length * this . location64 (ind + 1), h3);
+		tick (ctx, length * this . location64 (ind + 3), h3);
+		tick (ctx, length * this . location64 (ind + 5), h3);
+		tick (ctx, length * this . location64 (ind + 7), h3);
+	}
+	mark (ctx, 64, length * this . location64 (64), h1);
+};
+
+var celsius_scale = function (height) {
+	spacer . call (this, height, null);
+}; inherit (celsius_scale, spacer);
+celsius_scale . prototype . value10 = function (location) {return 10 * (location - 0.84) / 0.16;};
+celsius_scale . prototype . location10 = function (value) {return 0.84 + 0.16 * value / 10;};
+celsius_scale . prototype . valueC = function (location) {return 220 * location * 5 / 9 / 0.76 - 210 / 9;};
+celsius_scale . prototype . locationC = function (value) {return 0.76 * (value * 9 / 5 + 42) / 220;};
+celsius_scale . prototype . value = function (location) {if (location >= 0.84) return this . value10 (location); return this . valueC (location);};
+celsius_scale . prototype . location = function (value, position) {if (position >= 0.84) return this . location10 (value); return this . locationC (value);};
+celsius_scale . prototype . draw = function (ctx, length) {
+	var h1 = - this . height * 0.5, h2 = - this . height * 0.4, h3 = - this . height * 0.2;
+	tick (ctx, length * this . locationC (-22), h3);
+	for (var ind = -20; ind < 100; ind += 10) {
+		mark (ctx, ind, length * this . locationC (ind), h1);
+		tick (ctx, length * this . locationC (ind + 2), h3);
+		tick (ctx, length * this . locationC (ind + 4), h3);
+		tick (ctx, length * this . locationC (ind + 6), h3);
+		tick (ctx, length * this . locationC (ind + 8), h3);
+	}
+	mark (ctx, 100, length * this . locationC (100), h1);
+	for (var ind = 0; ind < 10; ind += 1) {
+		mark (ctx, ind, length * this . location10 (ind), h1);
+		tick (ctx, length * this . location10 (ind + 0.5), h2);
+		tick (ctx, length * this . location10 (ind + 0.1), h3);
+		tick (ctx, length * this . location10 (ind + 0.2), h3);
+		tick (ctx, length * this . location10 (ind + 0.3), h3);
+		tick (ctx, length * this . location10 (ind + 0.4), h3);
+		tick (ctx, length * this . location10 (ind + 0.6), h3);
+		tick (ctx, length * this . location10 (ind + 0.7), h3);
+		tick (ctx, length * this . location10 (ind + 0.8), h3);
+		tick (ctx, length * this . location10 (ind + 0.9), h3);
+	}
+	mark (ctx, 10, length * this . location10 (10), h1);
+};
+
+s = new Sliderule (1200, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.054, cursor_right_extension: 0.054, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0, cursor_limit_right: 0, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+s . braces . push (new BraceSupport (0.016, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (0.016, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 1, 50, 70, 8, 'silver', 'black'));
+s . braces . push (new BraceSupport (1.184, 158, 207, 70, 8, 'silver', 'black'));
+s . braces . push (new BezierBraces (44, 0.08, 2, corrugated, 'black', 2, 0.018, 20, 40, -0.035));
+s . braces . push (new Bolt (0.016, 208 - 24, 16, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.016, 208 - 24, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (0.004, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (0.03, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.184, 208 - 24, 16, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.184, 208 - 24, 6, '#dddddd', '#666666'));
+s . braces . push (new Bolt (1.172, 208 - 183, 8, '#eeeeee', '#666666'));
+s . braces . push (new Bolt (1.198, 208 - 183, 8, '#eeeeee', '#666666'));
+s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
+s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (-0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 221, 12, Math . random () * Math . PI, 'silver', '#666666'));
+
+var r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('FAHRENHEIT', 'bold 10px arialnarrow', 'right', 'black', -0.01, 18));
+r . markings . push (new Engraving ('FRACTIONS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 18));
+r . markings . push (new Engraving ('1/64', 'bold 10px arial', 'left', 'black', 1.015, 18));
+r . scales . push (new spacer (2));
+r . scales . push (new fahrenheit_scale (24));
+r . scales . push (new scale_A (24, {draw_e: false, draw_pi: false}));
+
+r = new Rule ({stator: 1, left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow', rounding: 2}); s . rules . push (r);
+r . scales . push (new custom_scale (108));
+r . markings . push (new Engraving ('UNIVERSAL', '14px arial', 'center', 'black', -0.04, 38));
+r . markings . push (new Engraving ('CONVERSION', '14px arial', 'center', 'black', -0.04, 55));
+r . markings . push (new Engraving ('SCALES', '14px arial', 'center', 'black', -0.04, 72));
+r . markings . push (new Engraving ('PICKETT', 'bold 14px arial', 'center', 'black', 1.05, 24));
+r . markings . push (new Engraving ('ALL METAL', '10px arial', 'center', 'black', 1.06, 102 - 12 - 14));
+r . markings . push (new Engraving ('SLIDE RULES', '10px arial', 'center', 'black', 1.06, 102 - 12));
+r . markings . push (new Bolt (-0.085, 51, 6, 'black', 'black'));
+r . markings . push (new Bolt (1.085, 51, 6, 'black', 'black'));
+
+r = new Rule ({left_margin: 0.115, right_margin: 0.115, rule_colour: 'yellow'}); s . rules . push (r);
+r . markings . push (new Engraving ('CELSIUS', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 20));
+r . markings . push (new Engraving ('(CENTIGRADE)', 'bold 10px arialnarrow', 'center', 'black', -0.025, 50 - 8));
+r . markings . push (new Engraving ('DECIMALS', 'bold 10px arialnarrow', 'right', 'black', 0.83, 50 - 8));
+r . markings . push (new Engraving ('100', 'bold 10px arial', 'left', 'black', 1.015, 50 - 8));
+r . scales . push (new scale_B (24, {draw_pi: false, draw_e: false}));
+r . scales . push (new celsius_scale (24));
+r . scales . push (new spacer (2));
+
+</script>
+
+
+<script src="sliderule_application.js"></script>
+
+<script>
+changeMarkings ('hairline', document . getElementById ('on_hairline') . checked);
+changeSide (document . getElementById ('visible_front') . checked ? 'front': document . getElementById ('visible_back') . checked ? 'back' : 'both');
+changeVersion ('german');
+</script>
+
+
+<!-- WiredMinds eMetrics tracking with Enterprise Edition V5.4 START -->
+<script type='text/javascript' src='https://count.carrierzone.com/app/count_server/count.js'></script>
+<script type='text/javascript'><!--
+wm_custnum='18de6f9568d8cffe';
+wm_page_name='pickett_n909_es.html';
+wm_group_name='/services/webpages/s/l/sliderulemuseum.com/public/VirtualSR2/react';
+wm_campaign_key='campaign_id';
+wm_track_alt='';
+wiredminds.count();
+// -->
+</script>
+<!-- WiredMinds eMetrics tracking with Enterprise Edition V5.4 END -->
+</body>
+</html>
+
